@@ -10,6 +10,17 @@ pipeline {
             }
         }
 
+        
+        stage('Clean Workspace') {
+            steps {
+                sh '''
+                npm cache clean --force
+                rm -rf node_modules
+                rm -f package-lock.json
+                '''
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
@@ -34,7 +45,7 @@ pipeline {
         stage('Deployment of nodeapp'){
              steps{
                  sh '''
-                     kubectl --apply -f k8/k8deployment.yml
+                     kubectl apply -f k8/k8deployment.yml
                  '''
              }
        }
@@ -42,7 +53,7 @@ pipeline {
        stage('Expose Service'){
               steps{
                    sh '''
-                      kubectl --apply -f k8/k8service.yml
+                      kubectl apply -f k8/k8service.yml
                    '''
              }
       }
