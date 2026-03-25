@@ -45,6 +45,7 @@ pipeline {
         stage('Deployment of nodeapp'){
              steps{
                  sh '''
+                     minikube image load b211626/node-docker-app:${BUILD_NUMBER}
                      kubectl -- apply -f k8/k8deployment.yml
                  '''
              }
