@@ -42,7 +42,7 @@ pipeline {
        stage('Expose Service'){
               steps{
                    sh '''
-                      kubectl --apply -f k8/k8Service.yml
+                      kubectl --apply -f k8/k8service.yml
                    '''
              }
       }
