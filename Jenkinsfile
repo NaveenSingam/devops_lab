@@ -46,7 +46,7 @@ pipeline {
              steps{
                  sh '''
                      minikube image load b211626/node-docker-app:${BUILD_NUMBER}
-                     kubectl -- apply -f k8/k8deployment.yml
+                     kubectl apply -f k8/k8deployment.yml
                  '''
              }
        }
@@ -54,7 +54,7 @@ pipeline {
        stage('Expose Service'){
               steps{
                    sh '''
-                      kubectl -- apply -f k8/k8service.yml
+                      kubectl apply -f k8/k8service.yml
                    '''
              }
       }
