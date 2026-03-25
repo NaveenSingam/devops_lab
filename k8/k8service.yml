@@ -6,7 +6,7 @@ spec:
     ports:
         targetPort: 8000
         port: 8001
-        nodeport: 3200
+        nodeport: 32000
     selector:
         app: my-deploy
     type: LoadBalancer
