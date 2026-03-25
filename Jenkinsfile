@@ -6,7 +6,7 @@ pipeline {
         stage('Checkout from GitHub') {
             steps {
                 git branch: 'master',
-                    url: 'https://github.com/laxmi916/node-docker-app.git'
+                    url: 'https://github.com/NaveenSingam/devops_lab.git'
             }
         }
 
@@ -20,14 +20,14 @@ pipeline {
             steps {
                 sh '''
                 docker build -t node-docker-app:${BUILD_NUMBER} .
-                docker tag node-docker-app:${BUILD_NUMBER} laxmi916/node-docker-app:${BUILD_NUMBER}
+                docker tag node-docker-app:${BUILD_NUMBER} b211626/node-docker-app:${BUILD_NUMBER}
                 '''
             }
         }
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push laxmi916/node-docker-app:${BUILD_NUMBER}'
+                sh 'docker push b211626/node-docker-app:${BUILD_NUMBER}'
             }
         }
         
