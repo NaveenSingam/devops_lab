@@ -4,9 +4,9 @@ metadata:
     name: my-service 
 spec:
     ports:
-        targetPort: 3001
-        port: 8000
+        targetPort: 8000
+        port: 8001
         nodeport: 3200
     selector:
-        app: my-deployment
+        app: my-deploy
     type: LoadBalancer
