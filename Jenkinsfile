@@ -10,7 +10,6 @@ pipeline {
             }
         }
 
-        
         stage('Clean Workspace') {
             steps {
                 sh '''
@@ -38,28 +37,46 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                sh 'docker push b211626/node-docker-app:${BUILD_NUMBER}'
+                sh '''
+                docker push b211626/node-docker-app:${BUILD_NUMBER}
+                '''
             }
         }
-        
-        stage('Deployment of nodeapp'){
-             steps{
-                 sh '''
-                     minikube image load b211626/node-docker-app:${BUILD_NUMBER}
-                     kubectl apply -f k8/k8deployment.yml
-                 '''
-             }
-       }
-       
-       stage('Expose Service'){
-              steps{
-                   sh '''
-                      kubectl apply -f k8/k8service.yml
-                   '''
-             }
-      }
-      
-     
+
+        stage('Start Minikube') {
+            steps {
+                sh '''
+                minikube status || minikube start --driver=docker
+                kubectl config use-context minikube
+                '''
+            }
+        }
+
+        stage('Deployment of nodeapp') {
+            steps {
+                sh '''
+                minikube image load b211626/node-docker-app:${BUILD_NUMBER}
+                kubectl apply -f k8/k8deployment.yml --validate=false
+                '''
+            }
+        }
+
+        stage('Expose Service') {
+            steps {
+                sh '''
+                kubectl apply -f k8/k8service.yml --validate=false
+                '''
+            }
+        }
+
+        stage('Check Deployment') {
+            steps {
+                sh '''
+                kubectl get pods
+                kubectl get services
+                '''
+            }
+        }
 
     }
 }
