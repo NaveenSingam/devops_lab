@@ -8,5 +8,5 @@ spec:
         port: 8000
         nodeport: 3200
     selector:
-        app: my-serv 
+        app: my-deployment
     type: LoadBalancer
