@@ -17,6 +17,5 @@ spec:
             - name: my-container
               image: b211626/node-docker-app:${BUILD_NUMBER}
               imagePullPolicy: Never
-              ports:
-              - containerPort: 8000
+              
            
